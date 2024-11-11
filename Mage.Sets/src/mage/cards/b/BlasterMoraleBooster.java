@@ -1,5 +1,6 @@
 package mage.cards.b;
 
+import mage.abilities.keyword.ModularAbility;
 import mage.abilities.keyword.TransformAbility;
 import mage.cards.CardImpl;
 import mage.cards.CardSetInfo;
@@ -21,6 +22,7 @@ public final class BlasterMoraleBooster extends CardImpl {
         this.nightCard = true;
 
         // Modular 3
+        this.addAbility(new ModularAbility(this, 3));
 
         // {X}, {T}: Move X +1/+1 counters from Blaster onto another target artifact. That artifact gains haste until end of turn. If Blaster has no +1/+1 counters on it, convert it. Activate only as a sorcery.
 
