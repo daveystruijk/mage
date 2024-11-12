@@ -1,6 +1,7 @@
 package mage.cards.b;
 
 import mage.MageInt;
+import mage.abilities.Ability;
 import mage.abilities.common.SimpleStaticAbility;
 import mage.abilities.effects.common.continuous.GainAbilityControlledEffect;
 import mage.abilities.effects.common.continuous.GainAbilityControlledSpellsEffect;
@@ -68,13 +69,16 @@ public final class BlasterCombatDJ extends CardImpl {
         this.addAbility(new MoreThanMeetsTheEyeAbility(this, "{1}{R}{G}"));
 
         // Other nontoken artifact creatures and Vehicles you control have modular 1.
-        this.addAbility(new SimpleStaticAbility(new GainAbilityControlledEffect(
-                new ModularAbility(null, 1), Duration.WhileOnBattlefield,
-                battlefieldFilter, true
-        )));
-        this.addAbility(new SimpleStaticAbility(new GainAbilityControlledSpellsEffect(
+        Ability givePermanentsModular = new SimpleStaticAbility(new GainAbilityControlledEffect(
+                new ModularAbility(null, 1), Duration.WhileOnBattlefield, battlefieldFilter
+        ));
+        this.addAbility(givePermanentsModular);
+
+        Ability giveSpellsModular = new SimpleStaticAbility(new GainAbilityControlledSpellsEffect(
                 new ModularAbility(null, 1), cardFilter
-        )));
+        ));
+        giveSpellsModular.setRuleVisible(false);
+        this.addAbility(giveSpellsModular);
 
         // Whenever you put one or more +1/+1 counters on Blaster, convert it.
     }
