@@ -127,7 +127,23 @@ In `Mage.Sets`, new card classes usually follow this shape:
 - For newly added card classes, use `@author daveystruijk`
 
 ### Card Data Lookup (AtomicCards)
-- Recommended lookup (without manually extracting the zip): 
+- Atomic cards data lives in `Mage.Verify/AtomicCards.json.zip` (MTGJSON `AtomicCards` format).
+- Top-level JSON structure:
+  - `meta`: metadata object (currently includes `date` and `version`)
+  - `data`: object keyed by card name
+- `data["<Card Name>"]` returns an array of one or more card-face objects:
+  - Single-faced cards usually have one element
+  - Multi-faced/transform/split cards include multiple elements, commonly with `side` (`"a"`, `"b"`, etc.) and `faceName`
+- Card-face objects are Oracle-centric aggregates (not per-print rows) and commonly include:
+  - Rules and identity: `name`, `layout`, `type`, `text`, `keywords`, `manaCost`, `manaValue`, `colorIdentity`, `colors`
+  - Combat/planeswalker/battle stats when relevant: `power`, `toughness`, `loyalty`, `defense`
+  - Cross-print info: `printings` (set code list), `legalities`, `rulings`, `foreignData`, `purchaseUrls`
+  - IDs: `identifiers.scryfallOracleId`
+- Keys are optional and vary by card/layout; always null-check/guard when using fields.
+- Recommended lookup commands (without manually extracting the zip):
+  - Single card by name: `unzip -p Mage.Verify/AtomicCards.json.zip | jq --arg name "<Card Name>" '.data[$name]'`
+  - Metadata/version check: `unzip -p Mage.Verify/AtomicCards.json.zip | jq '.meta'`
+  - Inspect a card's faces quickly: `unzip -p Mage.Verify/AtomicCards.json.zip | jq --arg name "<Card Name>" '.data[$name][] | {side, faceName, manaCost, manaValue, type, text}'`
 
 ### Comments for Complex Card Logic
 - Add concise, reason-focused comments for non-obvious logic (for example: combat reassignment, trigger batching, replacement interactions, layer/dependency edge cases, multiplayer targeting restrictions).
