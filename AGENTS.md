@@ -120,6 +120,13 @@ In `Mage.Sets`, new card classes usually follow this shape:
 - Private copy constructor
 - `copy()` override returning `new <CardName>(this)`
 - Constructor sets card types/subtypes/PT/abilities
+- For newly added card classes, use `@author daveystruijk`
+
+### Comments for Complex Card Logic
+- Add concise, reason-focused comments for non-obvious logic (for example: combat reassignment, trigger batching, replacement interactions, layer/dependency edge cases, multiplayer targeting restrictions).
+- Prefer comments that capture rules intent (Oracle/Gatherer rulings and relevant CR references) when that intent drives implementation details.
+- Explain why a specific implementation structure is required (for example, splitting effects to satisfy rules processing), not just what the code does.
+- Keep comments close to the tricky block and avoid repeating obvious card text or restating straightforward code.
 
 Use existing effects, abilities, and watchers when possible instead of creating duplicates.
 
