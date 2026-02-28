@@ -38,6 +38,7 @@ public final class Unfinity extends ExpansionSet {
         cards.add(new SetCardInfo("Comet, Stellar Pup", 166, Rarity.MYTHIC, mage.cards.c.CometStellarPup.class));
         cards.add(new SetCardInfo("Dissatisfied Customer", 72, Rarity.COMMON, mage.cards.d.DissatisfiedCustomer.class));
         cards.add(new SetCardInfo("Embiggen", 137, Rarity.COMMON, mage.cards.e.Embiggen.class));
+        cards.add(new SetCardInfo("Exchange of Words", 45, Rarity.RARE, mage.cards.e.ExchangeOfWords.class));
         cards.add(new SetCardInfo("Forest", 239, Rarity.LAND, mage.cards.basiclands.Forest.class, FULL_ART_UST_VARIOUS));
         cards.add(new SetCardInfo("Forest", 244, Rarity.LAND, mage.cards.basiclands.Forest.class, FULL_ART_UST_VARIOUS));
         cards.add(new SetCardInfo("Godless Shrine", 282, Rarity.RARE, mage.cards.g.GodlessShrine.class));
