@@ -161,11 +161,4 @@ Use existing effects, abilities, and watchers when possible instead of creating 
 - Avoid touching unrelated modules for single-card or single-rule fixes
 - If you change behavior, add or update a focused test in the nearest relevant module
 
-## Cursor / Copilot Rules Status
-Checked locations requested by user:
-- `.cursor/rules/` -> not found
-- `.cursorrules` -> not found
-- `.github/copilot-instructions.md` -> not found
-
-No additional Cursor/Copilot instruction files are present currently.
 This `AGENTS.md` should be treated as the in-repo agent guidance.
