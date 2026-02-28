@@ -115,7 +115,8 @@ Use these as practical lint-equivalent checks:
 
 ## Card Implementation Conventions
 Before implementing or making changes to cards, always consult the cards database:
-- `unzip -p Mage.Verify/AtomicCards.json.zip | jq --arg name "<Card Name>" '.data[$name]'`
+- To look up a single card: `unzip -p Mage.Verify/AtomicCards.json.zip | jq --arg name "<Card Name>" '.data[$name]'`
+- Also use this file when looking to clarify other cards' behavior
 
 In `Mage.Sets`, new card classes usually follow this shape:
 - `public final class <CardName> extends CardImpl`
