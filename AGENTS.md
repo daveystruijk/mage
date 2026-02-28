@@ -114,6 +114,9 @@ Use these as practical lint-equivalent checks:
   - Method naming varies (camelCase and underscore style both exist); follow local pattern
 
 ## Card Implementation Conventions
+Before implementing or making changes to cards, always consult the cards database:
+- `unzip -p Mage.Verify/AtomicCards.json.zip | jq --arg name "<Card Name>" '.data[$name]'`
+
 In `Mage.Sets`, new card classes usually follow this shape:
 - `public final class <CardName> extends CardImpl`
 - Public constructor `(UUID ownerId, CardSetInfo setInfo)`
@@ -121,6 +124,9 @@ In `Mage.Sets`, new card classes usually follow this shape:
 - `copy()` override returning `new <CardName>(this)`
 - Constructor sets card types/subtypes/PT/abilities
 - For newly added card classes, use `@author daveystruijk`
+
+### Card Data Lookup (AtomicCards)
+- Recommended lookup (without manually extracting the zip): 
 
 ### Comments for Complex Card Logic
 - Add concise, reason-focused comments for non-obvious logic (for example: combat reassignment, trigger batching, replacement interactions, layer/dependency edge cases, multiplayer targeting restrictions).
@@ -137,11 +143,6 @@ Use existing effects, abilities, and watchers when possible instead of creating 
 - Add or update focused regression tests in `Mage.Tests/src/test/java/org/mage/test/cards/**`
 - For bugfixes, prefer adding a failing test first, then implement behavior to make it pass
 - Validate with targeted single-test commands before broader module/full-suite runs
-
-### Card Data Research Policy
-- When asked to implement a new card, agents may search online for official/oracle card text and rulings
-- Prefer authoritative sources first (e.g., Gatherer/Scryfall/official set notes) and reconcile text before coding
-- If sources conflict, follow latest official Oracle wording and encode behavior in tests
 
 ## Error Handling and Logging
 - Logging commonly uses `org.apache.log4j.Logger`
