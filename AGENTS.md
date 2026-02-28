@@ -13,7 +13,7 @@ Guidance for coding agents working in this repository: safe edits, correct Maven
 
 ## Quick Start Commands
 - Compile all modules quickly: `mvn -DskipTests compile`
-- Run all tests CI-style: `mvn test -B -Dxmage.dataCollectors.printGameLogs=false -Dlog4j.configuration=file:${PWD}/.travis/log4j.properties`
+- Run all tests: `mvn test`
 - Run one gameplay test class: `mvn -pl Mage.Tests -am -Dtest=TempleOfPowerTest test`
 - Run one gameplay test method: `mvn -pl Mage.Tests -am -Dtest=TempleOfPowerTest#test_TransformRevert test`
 - Run one engine unit test: `mvn -pl Mage -am -Dtest=ManaTest test`
@@ -47,8 +47,8 @@ Use these as practical lint-equivalent checks:
 - Test-based validation: `mvn test`
 
 ## Test Commands
-### CI-like test run
-- `mvn test -B -Dxmage.dataCollectors.printGameLogs=false -Dlog4j.configuration=file:${PWD}/.travis/log4j.properties`
+### Full test run
+- `mvn test`
 ### Module test runs
 - `mvn -pl Mage.Tests -am test`
 - `mvn -pl Mage -am test`
