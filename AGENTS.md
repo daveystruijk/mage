@@ -114,9 +114,13 @@ Use these as practical lint-equivalent checks:
   - Method naming varies (camelCase and underscore style both exist); follow local pattern
 
 ## Card Implementation Conventions
+
 Before implementing or making changes to cards, always consult the cards database:
+
 - To look up a single card: `unzip -p Mage.Verify/AtomicCards.json.zip | jq --arg name "<Card Name>" '.data[$name]'`
 - Also use this file when looking to clarify other cards' behavior
+
+Also consult the comprehensive rules at `Utils/MagicComprehensiveRules.txt` when implementing mechanics that do not exist yet.
 
 In `Mage.Sets`, new card classes usually follow this shape:
 - `public final class <CardName> extends CardImpl`
