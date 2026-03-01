@@ -175,6 +175,56 @@ public class ForetellAbility extends SpecialAction {
         return true;
     }
 
+    /**
+     * For use in apply() method of OneShotEffect.
+     * Exile the target card. It becomes foretold.
+     * Its foretell cost is [foretellCost].
+     */
+    public static boolean doExileBecomesForetold(Card card, Game game, Ability source, String foretellCost) {
+        return doExileBecomesForetold(card, game, source, foretellCost, null);
+    }
+
+    /**
+     * For use in apply() method of OneShotEffect.
+     * Exile the target card. It becomes foretold.
+     * Its foretell cost is [foretellCost], and [foretellSplitCost] for split/spell-option cards.
+     */
+    public static boolean doExileBecomesForetold(Card card, Game game, Ability source, String foretellCost, String foretellSplitCost) {
+        Player controller = game.getPlayer(source.getControllerId());
+        if (controller == null) {
+            return false;
+        }
+
+        ForetellAbility foretellAbility = null;
+        if (!card.isLand(game)) {
+            UUID mainCardId = card.getMainCard().getId();
+            game.getState().setValue(mainCardId.toString() + "Foretell Cost", foretellCost);
+            game.getState().setValue(mainCardId.toString() + "Foretell Split Cost", foretellSplitCost);
+            foretellAbility = foretellSplitCost == null
+                    ? new ForetellAbility(card, foretellCost)
+                    : new ForetellAbility(card, foretellCost, foretellSplitCost);
+        }
+
+        // All card types (including lands) must be exiled
+        UUID exileId = CardUtil.getExileZoneId(card.getMainCard().getId().toString() + "foretellAbility", game);
+        controller.moveCardsToExile(card, source, game, false, exileId, " Foretell Turn Number: " + game.getTurnNum());
+        card.setFaceDown(true, game);
+
+        if (foretellAbility != null) {
+            Ability copiedSource = source.copy();
+            copiedSource.newId();
+            copiedSource.setSourceId(card.getId());
+            game.getState().setValue(card.getMainCard().getId().toString() + "Foretell Turn Number", game.getTurnNum());
+            foretellAbility.setSourceId(card.getId());
+            foretellAbility.setControllerId(card.getOwnerId());
+            game.getState().addOtherAbility(card, foretellAbility);
+            foretellAbility.activate(game, true);
+            game.addEffect(new ForetellAddCostEffect(new MageObjectReference(card, game)), copiedSource);
+            game.fireEvent(new GameEvent(GameEvent.EventType.CARD_FORETOLD, card.getId(), copiedSource, copiedSource.getControllerId(), 0, false));
+        }
+        return true;
+    }
+
 }
 
 class ForetellExileEffect extends OneShotEffect {
