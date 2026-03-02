@@ -58,6 +58,8 @@ Utils/*implemented.txt
 .build-tools.cson
 # mac os
 .DS_Store
+# Maven
+.classpath
 
 # build tools
 mage-bundle.zip
