@@ -19,9 +19,9 @@ public class CowardKillerTest extends CardTestPlayerBase {
         addCard(Zone.HAND, playerB, "Coward // Killer");
         addCard(Zone.BATTLEFIELD, playerB, "Mountain", 4);
 
-        castSpell(1, PhaseStep.PRECOMBAT_MAIN, playerB, "Killer", "Balduvian Bears");
+        castSpell(2, PhaseStep.PRECOMBAT_MAIN, playerB, "Killer", "Balduvian Bears");
 
-        setStopAt(1, PhaseStep.POSTCOMBAT_MAIN);
+        setStopAt(2, PhaseStep.POSTCOMBAT_MAIN);
         execute();
 
         assertPermanentCount(playerA, "Balduvian Bears", 0);
