@@ -13,6 +13,8 @@ import mage.game.Game;
 import mage.game.permanent.Permanent;
 import mage.target.common.TargetCreaturePermanent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public final class CowardKiller extends SplitCard {
@@ -60,16 +62,21 @@ class KillerEffect extends OneShotEffect {
     @Override
     public boolean apply(Game game, Ability source) {
         Permanent target = game.getPermanent(getTargetPointer().getFirst(game, source));
-        if (target != null) {
-            target.damage(3, source, game);
-            for (Permanent p : game.getBattlefield().getActivePermanents(StaticFilters.FILTER_PERMANENT_CREATURE, source.getControllerId(), game)) {
-                if (!target.getId().equals(p.getId()) && p.shareCreatureTypes(game,target)) {
-                    p.damage(3, source, game);
-                }
-            }
-            return true;
+        if (target == null) {
+            return false;
         }
-        return false;
+
+        List<Permanent> creaturesToDamage = new ArrayList<>();
+        for (Permanent permanent : game.getBattlefield().getActivePermanents(StaticFilters.FILTER_PERMANENT_CREATURE, source.getControllerId(), game)) {
+            if (target.getId().equals(permanent.getId()) || permanent.shareCreatureTypes(game, target)) {
+                creaturesToDamage.add(permanent);
+            }
+        }
+
+        for (Permanent permanent : creaturesToDamage) {
+            permanent.damage(3, source, game);
+        }
+        return true;
     }
 
     @Override
